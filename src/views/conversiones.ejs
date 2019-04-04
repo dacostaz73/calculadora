@@ -1,0 +1,87 @@
+<% include partials/_header %>
+<div class="row mt-5 m-3">
+    <div class="col-sm-12 col-md-12 col-lg-4">
+        <form action="/add" method="post">
+            <h4 align="center">Conversor de Unidades</h4>
+            <br>
+            <div class="form-group">
+                <label for="unidadOrigen">Valor</label>
+                <input type="number" class="form-control" id="unidadOrigen" name="unidadOrigen"  aria-describedby="origenHelp" placeholder="Ingresa un valor" value="<%= entrada %>" min="1" max="999999999" maxlength="13" onkeypress="return isNumberKey(event,this.id)" required>
+            </div>
+            <div align="center">
+            <% data.forEach(function (element, index) { %>
+                
+                <div class="form-check form-check-inline col-sm-3 col-md-4 col-lg-4" >
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="<%= 'inlineRadio'+element.id_sistema %>" value="<%= element.id_sistema %>" onclick="changeUnit(<%= element.id_sistema %>)" required>
+                    <label class="form-check-label" for="<%= 'inlineRadio'+element.id_sistema %>"><%= element.sistema %></label>
+                </div>
+            <% }); %>
+            </div>
+
+            <br>
+            <div class="form-group">
+                <label data-error="wrong" data-success="right">Unidad Origen</label>
+                <select class="form-control validate" id="cmbOrigen" name="cmbOrigen" disabled required>
+                    <option value="">Selecciona una opción</option>
+                    <% include partials/_combos %>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label data-error="wrong" data-success="right">Unidad Destino</label>
+                <select class="form-control validate" id="cmbDestino" name="cmbDestino" disabled required>
+                    <option value="">Selecciona una opción</option>
+                    <% include partials/_combos %>
+                </select>
+            </div>
+           
+            <div class="form-group">
+                <label for="unidadDestino">Resultado</label>
+                <input type="text" class="form-control" id="unidadDestino" name="unidadDestino" value="<%= resultado %>" readonly>  
+            </div>
+            <div class="form-group" align="center">
+                <button type="submit" class="btn btn-primary">Convertir</button>
+                <button type="reset" class="btn btn-secondary" onclick="clean()">Limpiar</button>
+            </div>
+        </form>
+        <br>
+    </div>
+  
+
+    <div class="col-md-8">
+        <h4 align="center">Historial</h4>
+        <br><br>
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Unidad</th>
+                    <th scope="col">U. Origen</th>
+                    <!--<th scope="col">U. Destino</th>
+                    <th scope="col">Valor</th>
+                    <th scope="col">Resultado</th>
+                    <th scope="col">Opciones</th> -->
+                </tr>
+            </thead>
+            <tbody>
+                <% data.forEach(function (element, index) { %>
+                <tr>
+                    <td> <%= element.id_sistema %> </td>
+                    <td> Peso</td>
+                    <td> Kilogramo </td>
+                    <!--<td> Gramo </td>
+                    <td> 5 </td>
+                    <td> 5000 </td>
+                    <td> borrar || modificar</td> -->
+                </tr>
+                <% }); %>
+
+            </tbody>
+        </table>
+        <pre>  </pre>
+    </div>
+</div>
+    
+
+
+<% include partials/_footer %>

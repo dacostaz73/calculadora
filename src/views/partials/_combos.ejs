@@ -1,0 +1,30 @@
+<% unidad.forEach(function (element, index) { 
+    var opc = parseInt(element.id_sistema);
+    switch(opc){
+        case 1:
+            %>
+            <option class="<%= 'cmbU show'+opc %>" value="<%= JSON.stringify(element) %>"><%= element.descripcion %></option>
+            <%
+            break;
+
+        case 2:
+            %>
+            <option class="<%= 'cmbU show'+opc %>" value="<%= JSON.stringify(element) %>"><%= element.descripcion %></option>
+            <%
+        break;
+
+        case 3:
+            %>
+            <option class="<%= 'cmbU show'+opc %>" value="<%= JSON.stringify(element) %>"><%= element.descripcion %></option>
+            <%
+        break;
+        
+        case 4:
+            %>
+            <option class="<%= 'cmbU show'+opc %>" value="<%= JSON.stringify(element) %>"><%= element.descripcion %></option>
+            <%
+        break;
+    }
+    %>
+    <!--<option value="<%= element.abreviatura %>"><%= element.descripcion %></option>-->
+<% }); %>
