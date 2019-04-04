@@ -1,18 +1,19 @@
 <% include partials/_header %>
-<div class="row mt-5 m-3">
+
+<div class="row mt-4 m-2">
     <div class="col-sm-12 col-md-12 col-lg-4">
         <form action="/add" method="post">
-            <h4 align="center">Conversor de Unidades</h4>
+            <h4 style="text-align: center">Conversor de Unidades</h4>
             <br>
             <div class="form-group">
                 <label for="unidadOrigen">Valor</label>
-                <input type="number" class="form-control" id="unidadOrigen" name="unidadOrigen"  aria-describedby="origenHelp" placeholder="Ingresa un valor" value="<%= entrada %>" min="1" max="999999999" maxlength="13" onkeypress="return isNumberKey(event,this.id)" required>
+                <input type="text" class="form-control" id="unidadOrigen" name="unidadOrigen"  aria-describedby="origenHelp" placeholder="Ingresa un valor" maxlength="13" onkeypress="return isNumberKey(event,this.id)" required>
             </div>
-            <div align="center">
+            <div style="text-align: center">
             <% data.forEach(function (element, index) { %>
-                
+
                 <div class="form-check form-check-inline col-sm-3 col-md-4 col-lg-4" >
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="<%= 'inlineRadio'+element.id_sistema %>" value="<%= element.id_sistema %>" onclick="changeUnit(<%= element.id_sistema %>)" required>
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="<%= 'inlineRadio'+element.id_sistema %>" value="<%= element.id_sistema %>"  onclick="changeUnit(<%= element.id_sistema %>)" required>
                     <label class="form-check-label" for="<%= 'inlineRadio'+element.id_sistema %>"><%= element.sistema %></label>
                 </div>
             <% }); %>
@@ -37,51 +38,57 @@
            
             <div class="form-group">
                 <label for="unidadDestino">Resultado</label>
-                <input type="text" class="form-control" id="unidadDestino" name="unidadDestino" value="<%= resultado %>" readonly>  
+                <input type="text" class="form-control" id="unidadDestino" name="unidadDestino" value="<%= resultado %>" style="color: brown" aria-describedby="valorAnterior" readonly>  
+                <small id="valorAnterior" class="form-text text-muted"><span id="txtAnterior"></span> </small>
             </div>
-            <div class="form-group" align="center">
+            <div class="form-group">
+                    <input type="hidden" class="form-control" id="valueModificar" name="valueModificar" style="color: darkslategrey" readonly>  
+            </div>
+            <div class="form-group" style="text-align: center">
                 <button type="submit" class="btn btn-primary">Convertir</button>
                 <button type="reset" class="btn btn-secondary" onclick="clean()">Limpiar</button>
             </div>
         </form>
         <br>
     </div>
-  
 
-    <div class="col-md-8">
-        <h4 align="center">Historial</h4>
+    <div class="col-sm-11 col-md-12 col-lg-8">
+        <h4 style="text-align: center">Historial</h4>
         <br><br>
         <table class="table">
-            <thead class="thead-dark">
+            <thead class="thead-dark" style="text-align: center">
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Unidad</th>
-                    <th scope="col">U. Origen</th>
-                    <!--<th scope="col">U. Destino</th>
+                    <!--<th scope="col">U. Origen</th>
+                    <th scope="col">U. Destino</th>-->
                     <th scope="col">Valor</th>
                     <th scope="col">Resultado</th>
-                    <th scope="col">Opciones</th> -->
+                    <th scope="col"></th> 
                 </tr>
             </thead>
-            <tbody>
-                <% data.forEach(function (element, index) { %>
+            <tbody style="text-align: center">
+                <% if (historial != undefined && historial != null) {
+                    var cont = 1;
+                    historial.forEach(function (element, index) { %>
                 <tr>
-                    <td> <%= element.id_sistema %> </td>
-                    <td> Peso</td>
-                    <td> Kilogramo </td>
-                    <!--<td> Gramo </td>
-                    <td> 5 </td>
-                    <td> 5000 </td>
-                    <td> borrar || modificar</td> -->
+                    <td style="vertical-align: middle"> <%= cont %> </td>
+                    <td style="vertical-align: middle"> <%= element.sistema %></td>
+                    <!--<td> <%= element.abrvEntrada %></td>
+                    <td> <%= element.abrvSalida %> </td>-->
+                    <td style="vertical-align: middle"> <%= element.valor_entrada+' '+element.abreviatura_entrada %> </td>
+                    <td style="vertical-align: middle"> <%= element.valor_salida +' '+element.abreviatura_salida%> </td>
+                    <td style="vertical-align: middle; text-align: center">
+                        <button class="btn btn-primary btn-info btn-sm" style="margin: 2px;" onclick="updateConversion('<%= JSON.stringify(element) %>')"><i class="fas fa-pen-square"></i></button>
+                        <button class="btn btn-primary btn-danger btn-sm" style="margin: 2px;" onclick="deleteById('<%= JSON.stringify(element) %>')"><i class="fas fa-trash-alt"></i></button>
+                    </td>
                 </tr>
-                <% }); %>
-
+                <% cont ++;
+                    }); 
+                }  
+                 %>
             </tbody>
         </table>
-        <pre>  </pre>
     </div>
 </div>
-    
-
-
 <% include partials/_footer %>
