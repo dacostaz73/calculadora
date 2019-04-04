@@ -1,4 +1,4 @@
-const express = require('express');
+﻿const express = require('express');
 const path = require('path');
 const morgan = require('morgan');
 const mysql = require('mysql');
@@ -20,11 +20,11 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(morgan('dev'));
 
 app.use(myConnection(mysql, {
-    host: 'localhost',
-    user: 'root',
-    password: '',
+    host: '107.180.2.185',
+    user: 'calculadora',
+    password: 'calculadora',
     port: '3306',
-    database: 'CalculadoraMaster'
+    database: 'calculadoramaster'
 }, 'single'));
 
 //middleware
